@@ -59,4 +59,9 @@ public class Cliente implements Serializable {
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
     }
+
+    @PrePersist  //se ejecutara justo antes de guardar el registro en la DB
+    public void prePersist(){
+        createdAt = new Date();
+    }
 }
