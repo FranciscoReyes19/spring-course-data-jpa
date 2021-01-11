@@ -10,7 +10,8 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">Spring Boot</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
@@ -31,35 +32,44 @@
 
     <div class="card mt-3">
         <div class="card-header">
-            <h1 th:text="${title}" class="text-secondary" ></h1>
+            <h1 th:text="${title}" class="text-secondary"></h1>
         </div>
         <div class="card-body">
-            <form th:action="@{/form}" th:object="${cliente}" method="post" >
-                <table class="table table-bordered" >
-                    <tr>
-                        <td style="width: 200px" >Nombre</td>
-                        <td>
-                            <input type="text" th:field="*{name} " class="form-control" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Apellido</td>
-                        <td>
-                            <input type="text" th:field="*{surname}" class="form-control" >
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Correo</td>
-                        <td>
-                            <input type="email" th:field="*{email}" class="form-control" >
-                        </td>
-                    </tr>
-                    <tr class="mt-3">
-                        <td>
-                            <input type="submit" value="Crear Cliente" class="btn btn-primary mr-0" >
-                        </td>
-                    </tr>
-                </table>
+            <form th:action="@{/form}" th:object="${cliente}" method="post">
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Nombre</label>
+                    <div class="col-sm-6">
+                    <input type="text" th:field="*{name} " class="form-control" th:errorclass="'form-control alert-danger'" >
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> </small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Apellido</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{surname}" class="form-control" th:errorclass="'form-control alert-danger'">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}" > </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Correo</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{email}" class="form-control" th:errorclass="'form-control alert-danger'">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" > </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-2 col-form-label">Fecha</label>
+                    <div class="col-sm-6">
+                        <input type="text" th:field="*{createdAt}" class="form-control" th:errorclass="'form-control alert-danger'">
+                        <small class="form-text text-danger" th:if="${#fields.hasErrors('createdAt')}" th:errors="*{createdAt}" > </small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-6 col-form-label" >
+                        <input type="submit" value="Crear Cliente" class="btn btn-primary ">
+                    </div>
+                </div>
                 <input type="hidden" th:field="*{id}">
             </form>
         </div>

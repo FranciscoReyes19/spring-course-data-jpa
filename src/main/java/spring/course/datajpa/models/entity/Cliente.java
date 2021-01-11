@@ -1,6 +1,15 @@
 package spring.course.datajpa.models.entity;
 
+import org.springframework.context.MessageSource;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -12,12 +21,20 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty(message = "el formato no es valido")
     private String name;
+
+    @NotEmpty(message = "el formato no es valido")
     private String surname;
+
+    @NotEmpty(message = "El correo no es valido")
+    @Email(message = "El formato del correo no es valido")
     private String email;
 
+    @NotNull(message = "el campo no debe estar vacio")
     @Column(name = "created_at")
-    @Temporal( TemporalType.DATE )
+    @Temporal(TemporalType.DATE )
+    @DateTimeFormat( pattern = "yyyy-MM-dd")
     private Date createdAt;
 
     public Long getId() {
@@ -60,8 +77,8 @@ public class Cliente implements Serializable {
         this.createdAt = createdAt;
     }
 
-    @PrePersist  //se ejecutara justo antes de guardar el registro en la DB
-    public void prePersist(){
-        createdAt = new Date();
-    }
+    //    @PrePersist  //se ejecutara justo antes de guardar el registro en la DB
+    //    public void prePersist(){
+    //        createdAt = new Date();
+    //    }
 }
