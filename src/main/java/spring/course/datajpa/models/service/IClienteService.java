@@ -1,11 +1,10 @@
-package spring.course.datajpa.models.dao;
+package spring.course.datajpa.models.service;
 
 import spring.course.datajpa.models.entity.Cliente;
 
 import java.util.List;
 
-public interface IClienteDao {
-
+public interface IClienteService {
     List<Cliente> findAll();
 
     void save(Cliente cliente);
