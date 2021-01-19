@@ -1,16 +1,8 @@
 package spring.course.datajpa.models.dao;
 
+import org.springframework.data.repository.CrudRepository;
 import spring.course.datajpa.models.entity.Cliente;
 
-import java.util.List;
+public interface IClienteDao extends CrudRepository<Cliente, Long> {
 
-public interface IClienteDao {
-
-    List<Cliente> findAll();
-
-    void save(Cliente cliente);
-
-    Cliente findOne(Long id);
-
-    void delete(Long id);
 }
