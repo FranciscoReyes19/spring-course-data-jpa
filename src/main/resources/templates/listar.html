@@ -25,7 +25,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="cliente: ${clientes}">
-                    <td th:text="${cliente.id}"></td>
+                    <td th:text="${cliente.id}">  </td>
                     <td th:text="${cliente.name}"></td>
                     <td th:text="${cliente.surname}"></td>
                     <td th:text="${cliente.email}"></td>
@@ -35,6 +35,7 @@
                            th:text="''"></a>
                         <a class="btn btn-danger btn-xs fas fa-trash" th:href="@{/eliminar/} + ${cliente.id}"
                            th:text="''" onclick="return confirm('Esta seguro de querer eliminar el dato?');"></a>
+                        <a class="btn btn-info btn-xs fas fa-eye" th:href="@{/ver/} + ${cliente.id}"></a>
                     </td>
                 </tr>
                 </tbody>

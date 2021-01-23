@@ -37,6 +37,16 @@ public class Cliente implements Serializable {
     @DateTimeFormat( pattern = "yyyy-MM-dd")
     private Date createdAt;
 
+    private String photo;
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(String photo) {
+        this.photo = photo;
+    }
+
     public Long getId() {
         return id;
     }
