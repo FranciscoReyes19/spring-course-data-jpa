@@ -1,5 +1,7 @@
 package spring.course.datajpa.controllers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.UUID;
 
 @Controller
 @SessionAttributes("cliente")
@@ -30,6 +33,8 @@ public class ClienteController {
     //@Qualifier("clienteDaoJPA")  //si es unico se puede omitir el nombre clienteDaoJPA
     @Autowired
     private IClienteService clienteService;
+
+    private final Logger log = LoggerFactory.getLogger(getClass());
 
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash){
@@ -80,16 +85,25 @@ public class ClienteController {
             return "form";
         }
         if (!photo.isEmpty()){
-            Path dirUploads = Paths.get("src//main//resources//static/uploads");
-            String rootPath = dirUploads.toFile().getAbsolutePath();
+
+            String uniqueFilename = UUID.randomUUID().toString() + "_" + photo.getOriginalFilename();
+            Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
+            Path rootAbsolutePath = rootPath.toAbsolutePath();
+
+            log.info("rootPath: " + rootPath);
+            log.info("rootAbsolutePath: " + rootAbsolutePath);
 
             try {
-                byte[] bytes = photo.getBytes();
-                Path fullPath = Paths.get(rootPath + "//" + photo.getOriginalFilename());
-                Files.write(fullPath, bytes);
+                //option 1 to save file
+                Files.copy(photo.getInputStream(), rootAbsolutePath);
 
-                flash.addFlashAttribute("info", "Ha subido correctamente '" + photo.getOriginalFilename() + "'");
-                cliente.setPhoto(photo.getOriginalFilename());
+                //option 2 to save file
+                //byte[] bytes = photo.getBytes();
+                //Path fullPath = Paths.get(rootPath + "//" + photo.getOriginalFilename());
+                //Files.write(fullPath, bytes);
+
+                flash.addFlashAttribute("info", "Ha subido correctamente '" + uniqueFilename + "'");
+                cliente.setPhoto(uniqueFilename);
 
             } catch (IOException e) {
                 e.printStackTrace();
