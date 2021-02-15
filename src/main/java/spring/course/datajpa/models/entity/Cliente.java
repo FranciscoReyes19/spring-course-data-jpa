@@ -11,7 +11,9 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -21,7 +23,7 @@ public class Cliente implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "el formato no es valido")
+    @NotEmpty(message = "el formato no es valido") //estan en archivo messages.properties
     private String name;
 
     @NotEmpty(message = "el formato no es valido")
@@ -39,8 +41,14 @@ public class Cliente implements Serializable {
 
     private String photo;
 
-    public String getPhoto() {
-        return photo;
+    //no hara el llamado de facturas hasta que se utilza el metodo(FecthType.LAZY)
+    //todas las facturas del cliente se eliminaran si se elimina el cliente(CascadeType.ALL)
+    //De manera autmatica creara la llave foranea y key para relacionar tablas (mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    private List<Invoice> invoices;
+
+    public Cliente() {
+        invoices = new ArrayList<Invoice>();
     }
 
     public void setPhoto(String photo) {
@@ -87,6 +95,20 @@ public class Cliente implements Serializable {
         this.createdAt = createdAt;
     }
 
+    public void setInvoices(List<Invoice> invoices) {
+        this.invoices = invoices;
+    }
+    public List<Invoice> getInvoices() {
+        return invoices;
+    }
+
+    public String getPhoto() {
+        return photo;
+    }
+
+    public void addInvoice(Invoice invoice){
+        invoices.add(invoice);
+    }
     //    @PrePersist  //se ejecutara justo antes de guardar el registro en la DB
     //    public void prePersist(){
     //        createdAt = new Date();
