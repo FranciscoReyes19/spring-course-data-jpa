@@ -13,7 +13,6 @@ public class ItemInvoice implements Serializable {
 
     private Integer amount;
 
-
     @ManyToOne(fetch = FetchType.LAZY) //ya se crea una llave foranea sin necesidad de usar @JoinColumn
     //@JoinColumn(name = "product_id")
     private Product product;
@@ -36,7 +35,7 @@ public class ItemInvoice implements Serializable {
         this.amount = amount;
     }
 
-    public Double calcImport(){
-        return amount.doubleValue();
+    public Double getProductPrice(){
+        return product.getPrice();
     }
 }

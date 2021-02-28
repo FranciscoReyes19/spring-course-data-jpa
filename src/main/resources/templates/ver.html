@@ -14,7 +14,7 @@
                 <a th:href="@{/form}" class="btn btn-success btn-xs"> Crear cliente</a>
             </div>
         </div>
-        <div class="card-body d-flex flex-row">
+        <div class="card-body d-flex flex-column">
             <div>
                 <img th:if="${#strings.length(cliente.photo) > 0}" class="img-thumbnail rounded float-left" style="max-width : 300px" th:src="@{'/uploads/' + ${cliente.photo}}" th:alt="${cliente.photo}">
             </div>
@@ -24,6 +24,27 @@
                 <li class="list-group-item" th:text="${cliente.email}"></li>
                 <li class="list-group-item" th:text="${cliente.createdAt}"></li>
             </ul>
+
+            <div th:if="${#lists.isEmpty(cliente.invoices)}" class="alert alert-info my-4" th:text="'No hay facturas asignadas para el cliente ' + ${cliente.name} + ' ' + ${cliente.surname}"></div>
+
+            <table th:if="${ not #lists.isEmpty(cliente.invoices)}" class="table table-bordered table-striped my-4" >
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Folio</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <tr th:each="invoice : ${cliente.invoices}">
+                    <td th:text="${invoice.id}" ></td>
+                    <td th:text="${invoice.description}" ></td>
+                    <td th:text="${invoice.createdAt}" ></td>
+                    <td th:text="${invoice.total}" ></td>
+                </tr>
+                </tbody>
+            </table>
 
         </div>
     </div>
