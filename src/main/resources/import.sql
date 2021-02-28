@@ -23,3 +23,22 @@ INSERT INTO clientes (id, name, surname, email, created_at, photo) VALUES( 22, '
 INSERT INTO clientes (id, name, surname, email, created_at, photo) VALUES( 23, 'Mariana', 'Guzman', 'Mariana@live.com','2019-01-01','');
 INSERT INTO clientes (id, name, surname, email, created_at, photo) VALUES( 24, 'Mario', 'Guzman', 'Mario@live.com','2019-03-04','');
 INSERT INTO clientes (id, name, surname, email, created_at, photo) VALUES( 25, 'Jonathan', 'Guzman', 'Jonathan@live.com','2019-03-11','');
+
+/* Populate tabla productos */
+INSERT INTO products (name, price,created_at) VALUES('Panasonic Pantalla LCD', 25.9990, NOW());
+INSERT INTO products (name, price,created_at) VALUES('Sony Camara digital DSC-W320B', 123.490, NOW());
+INSERT INTO products (name, price,created_at) VALUES('Apple ipod shuffle', 14.99990 , NOW());
+INSERT INTO products (name, price,created_at) VALUES('Sony Notebook z110', 37.990, NOW());
+INSERT INTO products (name, price,created_at) VALUES('Hewlett Packard Multifunctional F2280', 70.990, NOW());
+INSERT INTO products (name, price,created_at) VALUES('Bianchi Bycle 26 Inches', 70.990, NOW());
+INSERT INTO products (name, price,created_at) VALUES('Panasonic Pantalla LCD', 25.9990, NOW());
+INSERT INTO products (name, price,created_at) VALUES('Mica comoda 5 Cajones', 30.9990, NOW());
+
+INSERT INTO invoices (description, details, cliente_id, created_at) VALUE('Factura equipos de oficina', null, 1, NOW());
+INSERT INTO invoices_items (amount, invoice_id, product_id) VALUES(15, 1, 1);
+INSERT INTO invoices_items (amount, invoice_id, product_id) VALUES(21, 1, 4);
+INSERT INTO invoices_items (amount, invoice_id, product_id) VALUES(33, 1, 5);
+INSERT INTO invoices_items (amount, invoice_id, product_id) VALUES(18, 1, 7);
+
+INSERT INTO invoices (description, details, cliente_id, created_at) VALUE('Factura bicicleta', 'Alguna nota importante', 1, NOW());
+INSERT INTO invoices_items (amount, invoice_id, product_id) VALUES(34, 2, 6);

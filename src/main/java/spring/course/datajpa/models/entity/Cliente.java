@@ -41,7 +41,7 @@ public class Cliente implements Serializable {
 
     private String photo;
 
-    //no hara el llamado de facturas hasta que se utilza el metodo(FecthType.LAZY)
+    //no hara el llamado de facturas hasta que se utilze el metodo(FecthType.LAZY)
     //todas las facturas del cliente se eliminaran si se elimina el cliente(CascadeType.ALL)
     //De manera autmatica creara la llave foranea y key para relacionar tablas (mappedBy = "cliente")
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL )

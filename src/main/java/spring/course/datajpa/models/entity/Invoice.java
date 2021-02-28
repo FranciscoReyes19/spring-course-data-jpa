@@ -1,5 +1,7 @@
 package spring.course.datajpa.models.entity;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "invoices")
+@Slf4j
 public class Invoice implements Serializable {
 
     @Id
@@ -16,7 +19,7 @@ public class Invoice implements Serializable {
 
     private String description;
 
-    private String Details;
+    private String details;
 
     @Temporal(TemporalType.DATE)
     @Column(name = "created_at")
@@ -59,11 +62,11 @@ public class Invoice implements Serializable {
     }
 
     public String getDetails() {
-        return Details;
+        return details;
     }
 
     public void setDetails(String details) {
-        Details = details;
+        details = details;
     }
 
     public Date getCreatedAt() {
@@ -100,15 +103,12 @@ public class Invoice implements Serializable {
         Double total = 0.0;
 
         for (ItemInvoice item : items) {
-            total = item.calcImport();
+            total += item.getProductPrice();
+            System.out.println("price: "+item.getProductPrice());
         }
+        log.info("Total:" + total);
 
-//      int size = items.size();
-//      for (int i= 0; i< size ; i++){
-//          total += items.get(i).calcImport();
-//      }
-        return total;
-
+        return Math.floor(total);
     }
 
 }
