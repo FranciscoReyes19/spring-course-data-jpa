@@ -25,7 +25,7 @@ import java.net.MalformedURLException;
 import java.util.Map;
 
 @Controller
-@SessionAttributes("cliente")
+@SessionAttributes("customers")
 public class ClienteController {
 
     //@Qualifier("clienteDaoJPA")  //si es unico se puede omitir el nombre clienteDaoJPA
@@ -52,13 +52,13 @@ public class ClienteController {
 
     @GetMapping(value = "/ver/{id}")
     public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
-        Cliente cliente = clienteService.findOne(id);
-        if (cliente == null) {
+        Cliente customer = clienteService.findOne(id);
+        if (customer == null) {
             flash.addFlashAttribute("error", "El cliente no existe en la base de datos");
             return "redirect:/listar";
         }
-        model.put("cliente", cliente);
-        model.put("title", "Detalle del cliente " + cliente.getName());
+        model.put("customer", customer);
+        model.put("title", "Detalle del cliente " + customer.getName());
         return "ver";
     }
 
@@ -68,12 +68,12 @@ public class ClienteController {
         Pageable pageRequest = PageRequest.of(page, 4);
 
         //invocacion al service
-        Page<Cliente> clientes = clienteService.findAll(pageRequest);
+        Page<Cliente> customer = clienteService.findAll(pageRequest);
 
-        PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
+        PageRender<Cliente> pageRender = new PageRender<>("/listar", customer);
 
         model.addAttribute("title", "Listado de Clientes");
-        model.addAttribute("clientes", clientes);
+        model.addAttribute("customers", customer);
         model.addAttribute("page", pageRender);
 
         return "listar";
@@ -82,15 +82,15 @@ public class ClienteController {
     @RequestMapping(value = "/form")
     public String crear(Map<String, Object> model) {
 
-        Cliente cliente = new Cliente();
-        model.put("cliente", cliente);
+        Cliente customer = new Cliente();
+        model.put("customer", customer);
         model.put("title", "Formulario de cliente");
 
         return "form";
     }
 
     @RequestMapping(value = "/form", method = RequestMethod.POST)
-    public String guardar(@Valid Cliente cliente,
+    public String guardar(@Valid Cliente customer,
                           BindingResult result, Model model,
                           @RequestParam("file") MultipartFile photo,
                           RedirectAttributes flash,
@@ -105,8 +105,8 @@ public class ClienteController {
 
 
         if (!photo.isEmpty()) {
-            if (cliente.getId() != null && cliente.getId() > 0 && cliente.getPhoto() != null && cliente.getPhoto().length() > 0) {
-                uploadFileService.delete(cliente.getPhoto());
+            if (customer.getId() != null && customer.getId() > 0 && customer.getPhoto() != null && customer.getPhoto().length() > 0) {
+                uploadFileService.delete(customer.getPhoto());
             }
             String uniqueFilename = null;
             try {
@@ -116,11 +116,11 @@ public class ClienteController {
             }
 
             flash.addFlashAttribute("info", "Ha subido correctamente '" + uniqueFilename + "'");
-            cliente.setPhoto(uniqueFilename);
+            customer.setPhoto(uniqueFilename);
 
         }
-        String messageFlash = (cliente.getId() != null) ? "Cliente editado con éxito" : "Cliente creado con éxito";
-        clienteService.save(cliente);
+        String messageFlash = (customer.getId() != null) ? "Cliente editado con éxito" : "Cliente creado con éxito";
+        clienteService.save(customer);
         status.setComplete(); //eliminará el objeto cliente de la session
         flash.addFlashAttribute("success", messageFlash);
         return "redirect:listar";
@@ -129,11 +129,11 @@ public class ClienteController {
     @RequestMapping(value = "/form/{id}")
     public String editar(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
-        Cliente cliente;
+        Cliente customer;
 
         if (id > 0) {
-            cliente = clienteService.findOne(id);
-            if (cliente == null) {
+            customer = clienteService.findOne(id);
+            if (customer == null) {
                 flash.addFlashAttribute("error", "El id del cliente no existe en la DB");
                 return "redirect:listar";
             }
@@ -141,7 +141,7 @@ public class ClienteController {
             flash.addFlashAttribute("error", "El id del cliente no puede ser 0");
             return "redirect:listar";
         }
-        model.put("cliente", cliente);
+        model.put("customer", customer);
         model.put("title", "Editar de cliente");
         return "form";
     }
@@ -149,15 +149,19 @@ public class ClienteController {
     @RequestMapping(value = "/eliminar/{id}")
     public String delete(@PathVariable(value = "id") Long id, RedirectAttributes flash) {
         if (id > 0) {
-            Cliente cliente = clienteService.findOne(id);
+            Cliente customer = clienteService.findOne(id);
 
             clienteService.delete(id);
             flash.addFlashAttribute("success", "Cliente eliminado con éxito");
 
-            if (uploadFileService.delete(cliente.getPhoto())) {
-                flash.addFlashAttribute("info", "Foto " + cliente.getPhoto() + " eliminada con exito!");
+            if(customer.getPhoto() != null && uploadFileService.delete(customer.getPhoto())){
+                flash.addFlashAttribute("info", "Foto " + customer.getPhoto() + " eliminada con exito!");
+            }else{
+                System.out.println("sin foto!");
             }
 
+        }else{
+            System.out.println("Id vacio!");
         }
         return "redirect:/listar";
 

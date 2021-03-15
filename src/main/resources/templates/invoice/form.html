@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="layout/layout :: head"></head>
+<body>
+    <header th:replace="layout/layout :: header"></header>
+
+    <div class="container py-4">
+        <div class="card bg-light">
+            <div class="card-header" th:text="${title}"></div>
+            <div class="card-body">
+                <form th:action="@{/invoice/form/}" th:object="${invoice}" method="post">
+                    <div class="col-sm-6">
+                        <input th:value="${invoice.cliente.name} + ' ' + ${invoice.cliente.surname}" class="form-control" disabled="disabled">
+                    </div>
+                    <div class="form-group row">
+                        <label for="description" class="col-sm-2 col-form-label" th:text="'Descripción'"></label>
+                        <div class="col-sm-6">
+                            <input id="description" type="text" th:field="*{description}" class="form-control">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="observation" class="col-sm-2 col-form-label" th:text="'Observación'"></label>
+                        <div class="col-sm-6">
+                            <textarea th:field="*{details}" class="form-control" id="observation"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                    <input type="submit" th:value="${title}" class="btn btn-secondary">
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    <footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

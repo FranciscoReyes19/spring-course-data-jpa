@@ -28,7 +28,7 @@ public class Invoice implements Serializable {
     //EAGER trae _todo
     //LAZY es modo peresozo
     @ManyToOne(fetch = FetchType.LAZY)
-    private Cliente cliente;
+    private Cliente customer;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "invoice_id")
@@ -78,11 +78,11 @@ public class Invoice implements Serializable {
     }
 
     public Cliente getCliente() {
-        return cliente;
+        return customer;
     }
 
-    public void setCliente(Cliente cliente) {
-        this.cliente = cliente;
+    public void setCliente(Cliente customer) {
+        this.customer = customer;
     }
 
     public List<ItemInvoice> getItems() {

@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "clientes")
+@Table(name = "customers")
 public class Cliente implements Serializable {
 
     @Id
@@ -44,7 +44,7 @@ public class Cliente implements Serializable {
     //no hara el llamado de facturas hasta que se utilze el metodo(FecthType.LAZY)
     //todas las facturas del cliente se eliminaran si se elimina el cliente(CascadeType.ALL)
     //De manera autmatica creara la llave foranea y key para relacionar tablas (mappedBy = "cliente")
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
+    @OneToMany(mappedBy = "customer", fetch = FetchType.LAZY, cascade = CascadeType.ALL )
     private List<Invoice> invoices;
 
     public Cliente() {
@@ -113,4 +113,5 @@ public class Cliente implements Serializable {
     //    public void prePersist(){
     //        createdAt = new Date();
     //    }
+
 }
