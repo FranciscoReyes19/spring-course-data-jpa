@@ -3,6 +3,7 @@ package spring.course.datajpa.models.service;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import spring.course.datajpa.models.entity.Cliente;
+import spring.course.datajpa.models.entity.Product;
 
 import java.util.List;
 
@@ -16,4 +17,6 @@ public interface IClienteService {
     Cliente findOne(Long id);
 
     void delete(Long id);
+
+    List<Product> findByName(String term);
 }

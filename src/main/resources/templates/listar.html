@@ -31,11 +31,11 @@
                     <td th:text="${customer.email}"></td>
                     <td th:text="${customer.createdAt}"></td>
                     <td>
-                        <a class="btn btn-primary btn-xs fas fa-pencil-alt" th:href="@{/form/} + ${customer.id}"
-                           th:text="''"></a>
+                        <a class="btn btn-primary btn-xs fas fa-pencil-alt" th:href="@{/form/} + ${customer.id}" th:text="''"></a>
                         <a class="btn btn-danger btn-xs fas fa-trash" th:href="@{/eliminar/} + ${customer.id}"
                            th:text="''" onclick="return confirm('Esta seguro de querer eliminar el dato?');"></a>
                         <a class="btn btn-info btn-xs fas fa-eye" th:href="@{/ver/} + ${customer.id}"></a>
+                        <a class="btn btn-success btn-xs fas fa-plus-square" th:href="@{/invoice/form/} + ${customer.id}"></a>
                     </td>
                 </tr>
                 </tbody>

@@ -7,7 +7,9 @@ import org.springframework.http.client.InterceptingClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import spring.course.datajpa.models.dao.IClienteDao;
+import spring.course.datajpa.models.dao.IProductDAO;
 import spring.course.datajpa.models.entity.Cliente;
+import spring.course.datajpa.models.entity.Product;
 
 import java.util.List;
 
@@ -16,6 +18,9 @@ public class ClienteServiceImpl implements IClienteService {
 
     @Autowired
     private IClienteDao clienteDao;
+
+    @Autowired
+    private IProductDAO productDAO;
 
     @Override
     @Transactional(readOnly = true)
@@ -45,5 +50,11 @@ public class ClienteServiceImpl implements IClienteService {
     @Transactional
     public void delete(Long id) {
         clienteDao.deleteById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Product> findByName(String term) {
+        return productDAO.findByName(term);
     }
 }
